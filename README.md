@@ -1,8 +1,13 @@
-## Instructions
+# Instructions
 
-### `npm install` or `yarn`
+## Installation
 
-Installs all dependencies
+- `npm install` or `yarn`
+- Install MongoDB for your system
+- Configure MongoDB connection details in `config/mongo.json`
+- `npm run prepare` or `yarn prepare` (will seed the db)
+
+## Running
 
 ### `npm start` or `yarn start`
 
