@@ -1,11 +1,23 @@
-import React, { createContext, useContext, FC, useState } from 'react'
+import React, {
+	createContext,
+	useContext,
+	FC,
+	useState,
+	useEffect
+} from 'react'
 import axios from 'axios'
 
 interface AuthContextProps {
 	user?: any
 	token?: string | null
-	login?: (values: any) => void
+	login?: any
+	getUser?: () => Promise<any>
 	logout?: () => void
+}
+
+const alertError = err => {
+	console.error(err, err.response)
+	alert(err.response.data.message)
 }
 
 const storageKey = 'authToken'
@@ -14,24 +26,45 @@ const AuthContext = createContext(initialContextProps)
 
 const AuthProvider: FC = props => {
 	let token: string | null = null
+
 	// to prevent server render snafu
 	if (typeof sessionStorage !== 'undefined') {
 		token = sessionStorage.getItem(storageKey)
+		if (token)
+			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 	}
 	const [data, setData] = useState({ token, user: null })
 
 	const login = async values => {
-		const res = await axios.post('/api/auth/login', values)
-		console.log('login response', res)
-		sessionStorage.setItem(storageKey, res.data.token)
-		const { token, user } = res.data
-		setData({ token, user })
+		try {
+			const res = await axios.post('/api/auth/login', values)
+			console.log('login response', res)
+			const { token, user } = res.data
+			sessionStorage.setItem(storageKey, token)
+			setData({ token, user })
+		} catch (e) {
+			alertError(e)
+		}
 	}
-	const logout = () => {} // clear the token in localStorage and the user data
+	const getUser = async () => {
+		try {
+			const res = await axios.get('/api/auth/me')
+			setData({ token, user: res.data.user })
+		} catch (e) {
+			alertError(e)
+			logout()
+		}
+	}
+	const logout = () => {
+		sessionStorage.removeItem(storageKey)
+		setData({ token: null, user: null })
+	}
+
+	if (token && !data.user) getUser()
 
 	return (
 		<AuthContext.Provider
-			value={{ user: data.user, token: data.token, login, logout }}
+			value={{ user: data.user, token: data.token, getUser, login, logout }}
 			{...props}
 		/>
 	)

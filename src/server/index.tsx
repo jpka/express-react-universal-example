@@ -10,7 +10,7 @@ import apiRouter from './api'
 import App from '../client/App'
 
 dotenv.config()
-mongoose.connect(process.env.MONGO_URI || '')
+mongoose.connect(process.env.MONGO_URI || '', { useNewUrlParser: true })
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST ||
 	'../../build/assets.json')
