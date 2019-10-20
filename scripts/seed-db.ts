@@ -1,9 +1,11 @@
 import { Seeder } from 'mongo-seeding'
-import mongoConf from '../config/mongo.json'
 import path from 'path'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const seeder = new Seeder({
-	database: mongoConf,
+	database: process.env.MONGO_URI,
 	dropDatabase: true
 })
 const collections = seeder.readCollectionsFromPath(

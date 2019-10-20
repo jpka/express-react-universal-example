@@ -17,7 +17,8 @@ module.exports = {
 	projects: [
 		Object.assign(baseConfig('client'), {
 			displayName: 'client',
-			testEnvironment: 'jsdom'
+			testEnvironment: 'jsdom',
+			setupFilesAfterEnv: ['<rootDir>/src/client/tests/setup.ts']
 		}),
 		Object.assign(baseConfig('server'), {
 			displayName: 'server',

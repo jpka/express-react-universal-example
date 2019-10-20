@@ -1,29 +1,33 @@
-import App from '../client/App'
 import React from 'react'
 import { StaticRouter } from 'react-router-dom'
 import express from 'express'
 import { renderToString } from 'react-dom/server'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+
+import apiRouter from './api'
+import App from '../client/App'
+
+dotenv.config()
+mongoose.connect(process.env.MONGO_URI || '')
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST ||
 	'../../build/assets.json')
 
-const app = express()
-app
-	.disable('x-powered-by')
-	.use(express.static(process.env.RAZZLE_PUBLIC_DIR || 'public'))
-	.get('/*', (req, res) => {
-		const context: any = {}
-		const markup = renderToString(
-			<StaticRouter context={context} location={req.url}>
-				<App />
-			</StaticRouter>
-		)
+const serveApp = (req, res) => {
+	const context: any = {}
+	const markup = renderToString(
+		<StaticRouter context={context} location={req.url}>
+			<App />
+		</StaticRouter>
+	)
 
-		if (context.url) {
-			res.redirect(context.url)
-		} else {
-			res.status(200).send(
-				`<!doctype html>
+	if (context.url) {
+		res.redirect(context.url)
+	} else {
+		res.status(200).send(
+			`<!doctype html>
 				<html lang="en">
 					<head>
 							<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -45,8 +49,20 @@ app
 							<div id="root">${markup}</div>
 					</body>
 				</html>`
-			)
-		}
-	})
+		)
+	}
+}
+
+const app = express()
+
+app
+	.disable('x-powered-by')
+	.use(
+		express.static(process.env.RAZZLE_PUBLIC_DIR || 'public'),
+		bodyParser.urlencoded({ extended: false }),
+		bodyParser.json({})
+	)
+	.use('/api', apiRouter)
+	.get('/*', serveApp)
 
 export default app

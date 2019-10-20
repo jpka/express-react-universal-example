@@ -3,8 +3,7 @@
 ## Installation
 
 - `npm install` or `yarn`
-- Install MongoDB for your system
-- Configure MongoDB connection details in `config/mongo.json`
+- Configure MongoDB connection URI in `.env` to local or remote installation
 - `npm run prepare` or `yarn prepare` (will seed the db)
 
 ## Running
