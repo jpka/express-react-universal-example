@@ -1,5 +1,9 @@
 import request from 'supertest'
 import app from '../index'
+import jwt from 'jsonwebtoken'
+import User from '../api/models/user.model'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const users = {
 	valid: { username: 'juan', password: 'secret' },
@@ -24,7 +28,7 @@ describe('/api', () => {
 			it('fails when user is invalid', async () => {
 				const res = await req().send(users.invalid)
 				expect(res.statusCode).toEqual(401)
-				expect(res.body).toHaveProperty('error')
+				expect(res.body).toHaveProperty('message')
 			})
 		})
 	})

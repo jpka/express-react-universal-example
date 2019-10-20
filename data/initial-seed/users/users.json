@@ -1,10 +1,12 @@
 [
 	{
 		"username": "juan",
+		"name": "Juan Kaniefsky",
 		"password": "secret"
 	},
 	{
 		"username": "john",
+		"name": "John Smith",
 		"password": "mystery"
 	}
 ]
