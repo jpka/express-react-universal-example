@@ -1,8 +1,12 @@
-## Instructions
+# Instructions
 
-### `npm install` or `yarn`
+## Installation
 
-Installs all dependencies
+- `npm install` or `yarn`
+- Configure MongoDB connection URI in `.env` to local or remote installation
+- `npm run prepare` or `yarn prepare` (will seed the db)
+
+## Running
 
 ### `npm start` or `yarn start`
 
