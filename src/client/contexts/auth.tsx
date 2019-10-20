@@ -1,11 +1,10 @@
-import React, {
-	createContext,
-	useContext,
-	FC,
-	useState,
-	useEffect
-} from 'react'
-import axios from 'axios'
+import React, { createContext, useContext, FC, useState } from 'react'
+import axios, { AxiosStatic } from 'axios'
+
+axios.interceptors.response.use(undefined, err => {
+	console.error(err, err.response)
+	alert(err.response.data.message)
+})
 
 interface AuthContextProps {
 	user?: any
@@ -13,15 +12,11 @@ interface AuthContextProps {
 	login?: any
 	getUser?: () => Promise<any>
 	logout?: () => void
-}
-
-const alertError = err => {
-	console.error(err, err.response)
-	alert(err.response.data.message)
+	request: AxiosStatic
 }
 
 const storageKey = 'authToken'
-const initialContextProps: AuthContextProps = {}
+const initialContextProps: AuthContextProps = { request: axios }
 const AuthContext = createContext(initialContextProps)
 
 const AuthProvider: FC = props => {
@@ -42,16 +37,13 @@ const AuthProvider: FC = props => {
 			const { token, user } = res.data
 			sessionStorage.setItem(storageKey, token)
 			setData({ token, user })
-		} catch (e) {
-			alertError(e)
-		}
+		} catch (e) {}
 	}
 	const getUser = async () => {
 		try {
 			const res = await axios.get('/api/auth/me')
 			setData({ token, user: res.data.user })
 		} catch (e) {
-			alertError(e)
 			logout()
 		}
 	}
@@ -64,7 +56,14 @@ const AuthProvider: FC = props => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user: data.user, token: data.token, getUser, login, logout }}
+			value={{
+				user: data.user,
+				token: data.token,
+				getUser,
+				login,
+				logout,
+				request: axios
+			}}
 			{...props}
 		/>
 	)
