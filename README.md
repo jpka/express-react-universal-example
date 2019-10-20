@@ -4,6 +4,7 @@
 
 - `npm install` or `yarn`
 - Configure MongoDB connection URI in `.env` to local or remote installation
+- Check `data/initial-seed` for data to be seeded, check users for login credentials
 - `npm run prepare` or `yarn prepare` (will seed the db)
 
 ## Running

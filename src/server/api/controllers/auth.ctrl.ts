@@ -32,6 +32,7 @@ export default Router()
 		jwt.verify(token, process.env.SECRET || '', async (err, decoded) => {
 			if (err)
 				return res.status(500).send({ message: 'Failed to authenticate token' })
+			//@ts-ignore
 			const user = await User.findById(decoded.id)
 			if (!user) return res.status(404).send({ message: 'User not found' })
 			return res.status(200).send({ user: user })

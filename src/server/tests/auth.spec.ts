@@ -1,7 +1,5 @@
 import request from 'supertest'
 import app from '../index'
-import jwt from 'jsonwebtoken'
-import User from '../api/models/user.model'
 import dotenv from 'dotenv'
 dotenv.config()
 
