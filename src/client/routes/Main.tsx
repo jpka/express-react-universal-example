@@ -7,10 +7,14 @@ const Main: FC = () => {
 
 	return (
 		<div>
-			<h1>
-				{user.name} ({user.username})
-			</h1>
-			<button onClick={logout}>Logout</button>
+			{user && (
+				<div>
+					<h1>
+						{user.name} ({user.username})
+					</h1>
+					<button onClick={logout}>Logout</button>
+				</div>
+			)}
 			<UserTasks />
 		</div>
 	)

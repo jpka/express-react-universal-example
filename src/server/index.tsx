@@ -19,7 +19,7 @@ const serveApp = (req, res) => {
 	const context: any = {}
 	const markup = renderToString(
 		<StaticRouter context={context} location={req.url}>
-			<App />
+			<App ssrCookies={req.headers.cookie} />
 		</StaticRouter>
 	)
 
