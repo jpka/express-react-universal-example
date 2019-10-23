@@ -5,18 +5,18 @@ import Main from './routes/Main'
 import { useAuth } from './contexts/auth'
 
 const Router: FC = () => {
-	const { user } = useAuth()
+	const { token } = useAuth()
 	return (
 		<Switch>
 			<Route
 				exact
 				path="/login"
-				render={() => (!user ? <Login /> : <Redirect to="/" />)}
+				render={() => (!token ? <Login /> : <Redirect to="/" />)}
 			/>
 			<Route
 				exact
 				path="/"
-				render={() => (user ? <Main /> : <Redirect to="/login" />)}
+				render={() => (token ? <Main /> : <Redirect to="/login" />)}
 			/>
 		</Switch>
 	)
