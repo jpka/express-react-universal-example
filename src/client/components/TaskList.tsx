@@ -6,10 +6,10 @@ const TaskList = ({ tasks, onEach }: { tasks: any[]; onEach? }) => {
 		<Fragment>
 			<h2>Tasks</h2>
 			<ul>
-				{tasks.map(task => (
+				{tasks.map((task, i) => (
 					<li key={task._id}>
 						<Task {...task} />
-						{onEach && onEach(task)}
+						{onEach && onEach(task, i)}
 					</li>
 				))}
 			</ul>

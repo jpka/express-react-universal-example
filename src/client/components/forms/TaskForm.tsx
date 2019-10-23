@@ -2,7 +2,14 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik'
 
-const TaskForm = ({ onSubmit, initialValues = {}, buttonText = 'Submit' }) => {
+const TaskForm = ({
+	onSubmit,
+	initialValues = {
+		description: '',
+		dueDate: new Date().toLocaleDateString('en-CA')
+	},
+	buttonText = 'Submit'
+}) => {
 	return (
 		<Formik onSubmit={onSubmit} initialValues={initialValues}>
 			{() => (
