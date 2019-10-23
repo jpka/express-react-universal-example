@@ -10,8 +10,6 @@ export default Router()
 	.get('/', authorization, async (req: any, res) => {
 		try {
 			const tasks = await Task.find({ user: req.user.id }).exec()
-			console.log(req.user, req.user._id, req.user.id)
-			console.log(tasks)
 			res.status(200).send({ tasks })
 		} catch (err) {
 			handleError(err, res)
