@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 
 import apiRouter from './api'
-import App from '../client/App'
+import App from '../client/components/App'
 
 dotenv.config()
 mongoose.connect(process.env.MONGO_URI || '', { useNewUrlParser: true })

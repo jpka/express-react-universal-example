@@ -15,10 +15,12 @@ export default Router()
 			handleError(err, res)
 		}
 	})
-	.post('/', authorization, async (req, res) => {
+	.post('/', authorization, async (req: any, res) => {
 		try {
-			const newTask = await Task.create([req.body.task])
-			res.status(200).send({ task: newTask })
+			const newTask = await Task.create([
+				{ user: req.user.id, ...req.body.task }
+			])
+			res.status(200).send({ task: newTask[0] })
 		} catch (err) {
 			handleError(err, res)
 		}

@@ -1,5 +1,5 @@
 import React from 'react'
-import App from '../App'
+import App from '../components/App'
 import { integratedRender } from './utils'
 import { fireEvent } from '@testing-library/dom'
 
