@@ -2,10 +2,11 @@ import React, { FC } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Login from './routes/Login'
 import Main from './routes/Main'
-import { useAuth } from './contexts/auth'
+import { useSelector } from 'react-redux'
+import { AuthState } from '../modules/auth'
 
 const Router: FC = () => {
-	const { token } = useAuth()
+	const token = useSelector(({ auth }: { auth: AuthState }) => auth.token)
 	return (
 		<Switch>
 			<Route
