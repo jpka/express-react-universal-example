@@ -7,6 +7,7 @@ import cookieSvc from '../services/cookies'
 
 const App: FC<{ ssrCookies?: string }> = ({ ssrCookies }) => {
 	if (ssrCookies) cookieSvc.init(ssrCookies)
+
 	return (
 		<Provider store={createStore()}>
 			<Router />

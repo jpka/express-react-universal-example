@@ -6,10 +6,9 @@ import cookieSvc from '../../services/cookies'
 import { AuthState } from './index'
 
 const tokenKey = 'auth_token'
-const cookies = cookieSvc.cookies
 
 export default (
-	state: AuthState = { token: cookies.get(tokenKey) },
+	state: AuthState = { token: cookieSvc.cookies.get(tokenKey) },
 	action
 ) => {
 	switch (action.type) {
@@ -28,7 +27,7 @@ export default (
 				})
 			)
 		case types.login.success:
-			cookies.set(tokenKey, action.payload.token)
+			cookieSvc.cookies.set(tokenKey, action.payload.token)
 			return action.payload
 		case types.getUser.do:
 			return loop(
@@ -41,7 +40,7 @@ export default (
 		case types.getUser.success:
 			return { ...state, user: action.payload.user }
 		case types.logout:
-			cookies.remove(tokenKey)
+			cookieSvc.cookies.remove(tokenKey)
 			return {}
 		default:
 			return state
