@@ -8,7 +8,7 @@
     "test": "npx jest --watchAll",
     "start:prod": "NODE_ENV=production node build/server.js",
     "seed": "ts-node scripts/seed-db.ts",
-    "prepare": "npx seed"
+    "prepare": "npm run seed"
   },
   "dependencies": {
     "axios": "^0.19.0",
