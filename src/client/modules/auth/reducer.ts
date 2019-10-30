@@ -34,7 +34,7 @@ export default (
 				{ ...state },
 				Cmd.run(() => axios.get('/api/auth/me'), {
 					successActionCreator: actions.getUser.success,
-					failActionCreator: commonActions.requestFailure
+					failActionCreator: actions.logout
 				})
 			)
 		case types.getUser.success:
