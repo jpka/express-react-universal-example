@@ -4,11 +4,10 @@ import commonActions from '../actions'
 import axios from 'axios'
 import cookieSvc from '../../services/cookies'
 import { AuthState } from './index'
-
-const tokenKey = 'auth_token'
+import { auth } from '../../../values.json'
 
 export default (
-	state: AuthState = { token: cookieSvc.cookies.get(tokenKey) },
+	state: AuthState = { token: cookieSvc.cookies.get(auth.tokenKey) },
 	action
 ) => {
 	switch (action.type) {
@@ -27,7 +26,7 @@ export default (
 				})
 			)
 		case types.login.success:
-			cookieSvc.cookies.set(tokenKey, action.payload.token)
+			cookieSvc.cookies.set(auth.tokenKey, action.payload.token)
 			return action.payload
 		case types.getUser.do:
 			return loop(
@@ -40,7 +39,7 @@ export default (
 		case types.getUser.success:
 			return { ...state, user: action.payload.user }
 		case types.logout:
-			cookieSvc.cookies.remove(tokenKey)
+			cookieSvc.cookies.remove(auth.tokenKey)
 			return {}
 		default:
 			return state

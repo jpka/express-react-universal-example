@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.model'
 import authorization from '../middlewares/authorization.mw'
 import { omit } from 'lodash'
+import { auth } from '../../../values.json'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -28,6 +29,6 @@ export default Router()
 		return res.status(200).send({ user: user })
 	})
 	.get('/logout', (req, res) => {
-		// req.logout()
-		res.redirect('/')
+		res.clearCookie(auth.tokenKey)
+		res.redirect('/login')
 	})

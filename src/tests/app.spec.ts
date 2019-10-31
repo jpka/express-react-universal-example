@@ -2,6 +2,7 @@ import request from 'supertest'
 import app from '../server'
 import User from '../server/api/models/user.model'
 import jwt from 'jsonwebtoken'
+import { auth } from '../values.json'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -33,7 +34,7 @@ describe('when authenticated', () => {
 	test('/ should serve main page', async done => {
 		const res = await request(app)
 			.get('/')
-			.set('Cookie', [`auth_token=${token}`])
+			.set('Cookie', [`${auth.tokenKey}=${token}`])
 
 		expect(res.text).toMatch('Tasks')
 		done()

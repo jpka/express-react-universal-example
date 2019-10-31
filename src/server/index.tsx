@@ -63,6 +63,7 @@ app
 		bodyParser.json({})
 	)
 	.use('/api', apiRouter)
+	.use('/logout', (req, res) => res.redirect('/api/auth/logout'))
 	.get('/*', serveApp)
 
 export default app
