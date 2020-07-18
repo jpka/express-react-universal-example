@@ -20,7 +20,7 @@
     "express-session": "^1.17.0",
     "formik": "^1.5.8",
     "immer": "^4.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mongo-seeding": "^3.4.0-alpha.0",
     "mongoose": "^5.7.5",
     "razzle": "^3.0.0",
